@@ -1,3 +1,11 @@
-<button (click)="test()">Test</button>
+<!-- <button (click)="test()">Test</button>
 <button (click)="login()">Login</button>
-<button (click)="getData()">get data</button>
+<button (click)="getData()">get data</button> -->
+
+
+<div class="container" style="min-height: 15vw">
+  <a class="btn btn-success" [routerLink]="['/login']">login</a>&nbsp;
+  <a class="btn btn-danger" [routerLink]="['/about']">about</a>&nbsp;
+  <a class="btn btn-info" [routerLink]="['/products']">products</a>&nbsp;
+</div>
+<router-outlet></router-outlet>
