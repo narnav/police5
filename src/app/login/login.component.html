@@ -1,4 +1,8 @@
 <p>login works!</p>
-<button (click)="login()">Login</button>
+User: <input #username>
+pwd: <input #password> 
+<button (click)="login(username.value,password.value)">Login</button>
 
 <button (click)="logout()">Logout</button>
+login:
+{{token}}

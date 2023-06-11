@@ -9,6 +9,7 @@ import { SampService } from '../samp.service';
 })
 export class LoginComponent {
   returnUrl: string;
+  token:any 
   constructor(
     private auth: SampService,
     private router: Router,
@@ -20,10 +21,12 @@ export class LoginComponent {
 
   ngOnInit() {
     // get the returnUrl query parameter
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
-  login() {
-    this.auth.login();
+  login(username:string,password:string) {
+    // console.log(username,password);
+    
+    this.auth.login(username,password).subscribe((restoken:any) => localStorage.setItem("token", restoken.access))
     this.router.navigateByUrl(this.returnUrl);
   }
   logout() {

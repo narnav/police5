@@ -1,1 +1,14 @@
-<p>products works!</p>
+<p>products works!!!!!!!!!</p>
+
+<div *ngFor="let item of myProducts">
+    {{item.desc}}
+    {{item.price}}
+    <button (click)="addToCart(item,1)">+</button>
+    <button (click)="addToCart(item,-1)">-</button>
+</div>
+
+
+
+<!-- {{myProducts}} -->
+<h1>{{msg}}</h1>
+<button (click)="Checkout()">Checkout</button>

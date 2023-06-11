@@ -1,0 +1,11 @@
+<p>cart works!</p>
+
+<h2>Cart</h2>
+<div  *ngFor="let product of cart">
+    {{ product.desc }}    {{ product.price }} {{ product.amount }}
+    <!-- {{product|json}} -->
+  </div>
+
+  only cost: {{total}}
+
+  <button (click)="sendCart()">Check out</button>

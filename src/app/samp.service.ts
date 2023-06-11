@@ -14,13 +14,13 @@ export class SampService {
     return this.http.get('http://localhost:3005');
   }
 
-  login() {
+  login(username:string,password:string) {
 
     this.isLoged.next(true);
 
-    return this.http.post('http://localhost:3005/api/login', {
-      username: 'user',
-      password: 'password',
+    return this.http.post('http://127.0.0.1:8000/login/', {
+      username,
+      password,
     });
   }
   logout(): void {

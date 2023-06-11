@@ -16,7 +16,6 @@ export class GrdGuardGuard implements CanActivate {
         tap((isLoged) => {
           if (!isLoged) {
             const returnUrl = state.url;
-            console.log('login');
             this.rout.navigate(['login'], { queryParams: { returnUrl } });
           } else {
             map((loggedIn) => (loggedIn ? true : false));
