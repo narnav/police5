@@ -1,6 +1,7 @@
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { CartItem } from '../cart-item';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +13,24 @@ export class CartService {
   getCart() {
     return this.cartSubject.asObservable();
   }
-  apiUrl="http://127.0.0.1:8000/carts/"
+  apiUrl="http://127.0.0.1:8000/addcart/"
 
-  sendCart(cart: any) {
+  getItems(): Observable<any> {
+   
+    return this.myServer.post<any>(this.apiUrl,{});
+  }
+
+
+  sendCart(cart: any):Observable<any> {
     
-    
+
+    console.log(JSON.stringify(cart));
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const cartJson = JSON.stringify(cart);
-    return this.myServer.post(this.apiUrl, cartJson,{headers});
+    // headers.set('Content-Type', 'application/json'); // Update the headers correctly
+    return this.myServer.post<any>(this.apiUrl,[{"amount":2,"desc":"m","price":"2.00"}], { headers });
+    return this.myServer.post<any>(this.apiUrl,cart, { headers });
+    // return this.myServer.post<any>(this.apiUrl, cartJson)//, { headers });
   }
 
   // Initializes the cart by retrieving stored cart data from local storage
@@ -40,17 +50,22 @@ export class CartService {
     let updatedCart: any[] = [];
 
     if (temp) {
-      // If product already exists in the cart
+      // If product already exists in the cart,add/remove 1 from the amount
       temp.amount += mnt;
       if (temp.amount == 0) {
         // If the quantity reaches 0, remove the product from the cart
         updatedCart = [...currentCart.filter((x) => product.id != x.id)];
       } else {
+        
         updatedCart = [...currentCart];
       }
     } else {
       // If product doesn't exist in the cart, add it
+      if(mnt === 1)
+      {
+        console.log("add one");
       updatedCart = [...currentCart, product];
+      }
     }
 
     this.cartSubject.next(updatedCart);

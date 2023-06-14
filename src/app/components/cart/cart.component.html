@@ -4,6 +4,8 @@
 <div  *ngFor="let product of cart">
     {{ product.desc }}    {{ product.price }} {{ product.amount }}
     <!-- {{product|json}} -->
+    <button (click)="addToCart(product,1)">+</button>
+    <button (click)="addToCart(product,-1)">-</button>
   </div>
 
   only cost: {{total}}
