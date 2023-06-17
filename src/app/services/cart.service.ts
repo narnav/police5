@@ -1,4 +1,4 @@
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CartItem } from '../cart-item';
@@ -8,29 +8,25 @@ import { CartItem } from '../cart-item';
 })
 export class CartService {
   private cartSubject = new BehaviorSubject<any[]>([]);
-  constructor(private myServer: HttpClient) { }
+  constructor(private myServer: HttpClient) {}
   // Returns an observable of the cart subject
   getCart() {
     return this.cartSubject.asObservable();
   }
-  apiUrl="http://127.0.0.1:8000/addcart/"
+  apiUrl = 'http://127.0.0.1:8000/addcart/';
 
   getItems(): Observable<any> {
-   
-    return this.myServer.post<any>(this.apiUrl,{});
+    return this.myServer.post<any>(this.apiUrl, {});
   }
 
-
-  sendCart(cart: any):Observable<any> {
-    
-
+  sendCart(cart: any): Observable<any> {
     console.log(JSON.stringify(cart));
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    // headers.set('Content-Type', 'application/json'); // Update the headers correctly
-    return this.myServer.post<any>(this.apiUrl,[{"amount":2,"desc":"m","price":"2.00"}], { headers });
-    return this.myServer.post<any>(this.apiUrl,cart, { headers });
-    // return this.myServer.post<any>(this.apiUrl, cartJson)//, { headers });
+    return this.myServer.post<any>(this.apiUrl, cart, {
+      headers,
+    });
+    // return this.myServer.post<any>(this.apiUrl, cart, { headers });
   }
 
   // Initializes the cart by retrieving stored cart data from local storage
@@ -56,15 +52,13 @@ export class CartService {
         // If the quantity reaches 0, remove the product from the cart
         updatedCart = [...currentCart.filter((x) => product.id != x.id)];
       } else {
-        
         updatedCart = [...currentCart];
       }
     } else {
       // If product doesn't exist in the cart, add it
-      if(mnt === 1)
-      {
-        console.log("add one");
-      updatedCart = [...currentCart, product];
+      if (mnt === 1) {
+        console.log('add one');
+        updatedCart = [...currentCart, product];
       }
     }
 
